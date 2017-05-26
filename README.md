@@ -26,7 +26,7 @@ export PATH=$NDK_ROOT:$PATH
 
 
 ## 修改`ffmpeg-3.3.1/configure`
-这个主要是生成的lib包的包名规范成以libxxx.so的形式。 否则生成的so文件在android下是无法加载的，替换过程一定要谨慎，不然编译出来的都无用了。
+这个主要是生成的lib包的包名规范成以libxxx.so的形式。 否则生成的so文件在android下是无法加载的，替换过程一定要谨慎，需要全部替换掉。这里我提供一个[替换好的configure文件](https://github.com/chendongMarch/FFmpegAndroidSupport/blob/master/backups/configure)供参考:thumbsup:
 
 ```bash
 # 找到下面几行替换一下
@@ -44,7 +44,7 @@ SLIB_INSTALL_LINKS='$(SLIBNAME)'
 
 
 ## 新增`ffmpeg-3.3.1/build_android.sh`脚本
-NDK后面的路径换成自己的路径
+注意,NDK后面的路径换成自己的路径，可以参考[编写好的文件](https://github.com/chendongMarch/FFmpegAndroidSupport/blob/master/backups/build_android.sh)
 
 ```bash
 #!/bin/sh
@@ -87,12 +87,12 @@ build_one
 ## 编译
 执行`build_android.sh`脚本，如果没有权限可以使用`chomd +x`增加执行权限。
 然后等一段时间，你会发现在FFmpeg中出现了一个名为android的文件夹。
+目录如下
+![](http://7xtjec.com1.z0.glb.clouddn.com/ffmpeg_finder_dir_scan.jpeg)
 
-```bash
-android
-	arm
-	lib
-```
+## 将编译生成的文件copy到AS中
+目录如下
+![](http://7xtjec.com1.z0.glb.clouddn.com/ffmpeg_as_dir_scan.jpg)
 
 
 ## 编写`Android.mk`
