@@ -20,9 +20,7 @@ public class FFmpegSupport {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-//    public native String ffmpegRun();
     public  static native String ffmpegHello();
 }
