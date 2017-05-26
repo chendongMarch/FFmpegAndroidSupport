@@ -168,12 +168,12 @@ sourceSets {
         }
     }
 ```
-点击运行，出现了以下错误
+点击运行，出现了以下错误：
+<font color="red">Your project contains C++ files but
+it is not using a supported native build system。</font>
+解决这个问题
 
 ```
-Your project contains C++ files but
-it is not using a supported native build system。
-
 // 在gradle.properties添加
 Android.useDeprecatedNdk=true
 
