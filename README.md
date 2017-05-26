@@ -1,11 +1,5 @@
----
-layout: post
-title: 编译FFmpeg
-date: 2017-05-25
-category: Android
-tags: [Android]
-keywords:
----
+
+[博客地址链接](http://chendongmarch.github.io/2017/05/25/Android%E5%BC%80%E5%8F%91/%E7%BC%96%E8%AF%91ffmpeg/)
 
 ## 配置NDK环境
 打开`~/.bash_profile`文件，添加`ndk`的环境变量，最后别忘了`source .bash_profile`更新配置
