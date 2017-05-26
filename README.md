@@ -1,12 +1,20 @@
-# FFmpeg-Android
+---
+layout: post
+title: 编译FFmpeg
+date: 2017-05-25
+category: Android
+tags: Android
+keywords:
+---
 
-> 编译` FFmpeg3.3.1 `的so文件，并在` Android `工程中使用。
-> FFmpeg版本：3.3.1
-> IDE：AndroidStudio
-> OS：Mac OSX
-> [本文博客链接](http://chendongmarch.github.io/2017/05/25/Android%E5%BC%80%E5%8F%91/%E7%BC%96%E8%AF%91ffmpeg/)
+编译` FFmpeg3.3.1 `的so文件，并在` Android `工程中使用。
+FFmpeg版本：3.3.1
+IDE：AndroidStudio
+OS：Mac OSX
 
 <!--more-->
+
+[本文博客链接](http://chendongmarch.github.io/2017/05/25/Android%E5%BC%80%E5%8F%91/%E7%BC%96%E8%AF%91ffmpeg/)
 
 ## 配置 NDK 环境
 打开`~/.bash_profile`文件，添加`ndk`的环境变量，最后别忘了`source .bash_profile`更新配置
@@ -96,7 +104,6 @@ build_one
 ![](http://7xtjec.com1.z0.glb.clouddn.com/ffmpeg_finder_dir_scan.jpeg)
 
 ## 将编译生成的文件 copy 到 AS 中
-
 目录如下，jniLibs里面是最后我们编译生成好之后拷贝进去的，现在应该是空的，编译生成的so文件会生成在`src/main/libs`目录里面，生成好之后，如果你使用`jniLibs`目录加载so,就拷贝到这里。图片中的描述略有歧义。
 
 ![](http://7xtjec.com1.z0.glb.clouddn.com/ffmpeg_as_dir_scan.jpg)
