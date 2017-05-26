@@ -88,11 +88,11 @@ build_one
 执行`build_android.sh`脚本，如果没有权限可以使用`chomd +x`增加执行权限。
 然后等一段时间，你会发现在FFmpeg中出现了一个名为android的文件夹。
 目录如下
-![](http://7xtjec.com1.z0.glb.clouddn.com/ffmpeg_finder_dir_scan.jpeg)
+![](https://github.com/chendongMarch/FFmpegAndroidSupport/blob/master/backups/ffmpeg_finder_dir.jpeg)
 
 ## 将编译生成的文件copy到AS中
 目录如下
-![](http://7xtjec.com1.z0.glb.clouddn.com/ffmpeg_as_dir_scan.jpg)
+![](https://github.com/chendongMarch/FFmpegAndroidSupport/blob/master/backups/ffmpeg_as_dir.jpeg)
 
 
 ## 编写`Android.mk`
