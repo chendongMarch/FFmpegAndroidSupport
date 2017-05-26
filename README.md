@@ -1,6 +1,11 @@
-
-
-# FFmpeg Support
+---
+layout: post
+title: 编译FFmpeg
+date: 2017-05-25
+category: Android
+tags: [Android]
+keywords:
+---
 
 ## 配置NDK环境
 打开`~/.bash_profile`文件，添加`ndk`的环境变量，最后别忘了`source .bash_profile`更新配置
@@ -143,9 +148,42 @@ APP_ABI := armeabi armeabi-v7a
 
 ## 编译生成so
 local.properties 配置ndk目录,通常是默认配置好的。
-然后进入到terminal，cd到jni目录，执行ndk-build,(一般情况下ndk的目录应该在local.properties由系统自动创建了，如果没有收到呢添加)
+然后进入到terminal，cd到jni目录，执行ndk-build,(一般情况下ndk的目录应该在local.properties由系统自动创建了)
 
 ```
 ndk.dir=/Users/march/AndroidRes/sdk/ndk-bundle
 sdk.dir=/Users/march/AndroidRes/sdk
+```
+
+
+## 运行项目
+编辑`app/build.gradle`配置好so加载路径，将so文件拷贝进jniLibs目录，当然你如果喜欢放在libs目录里面也是可以的，一定要记得`armeabi/xxx.so`，abi目录不要忘记，不然会提示找不到，不要问我为什么特别提醒 :smile:
+
+```gralde
+sourceSets {
+        //定义编译时编译文件的路径
+        main {
+            res.srcDirs = ['src/main/res']
+            jniLibs.srcDirs = ['src/main/jniLibs']
+        }
+    }
+```
+点击运行，出现了以下错误
+
+```
+Your project contains C++ files but
+it is not using a supported native build system。
+
+// 在gradle.properties添加
+Android.useDeprecatedNdk=true
+
+// 在app/build.gradle 添加jni.srcDirs = []这一行
+sourceSets {
+        //定义编译时编译文件的路径
+        main {
+            res.srcDirs = ['src/main/res']
+            jniLibs.srcDirs = ['src/main/jniLibs']
+            jni.srcDirs = []
+        }
+    }
 ```
