@@ -1,13 +1,19 @@
 
+编译` FFmpeg3.3.1 `的so文件，并在` Android `工程中使用。
 
->编译` FFmpeg3.3.1 `的so文件，并在` Android `工程中使用。
 FFmpeg版本：3.3.1
-IDE：AndroidStudio
-OS：Mac OSX
-[本文博客链接](http://chendongmarch.github.io/2017/05/25/Android%E5%BC%80%E5%8F%91/%E7%BC%96%E8%AF%91ffmpeg/)
-ps: 开始的时候我只编译出了6个so文件，缺少`libavdevice.so`和`libpostproc.so`，主要是因为`build_andorid.sh`的配置不同，现在可以编译出8个so文件，在文章中的图片出现的都是6个so文件，特此声明。
-<!--more-->
 
+IDE：AndroidStudio
+
+OS：Mac OSX
+
+[本文博客链接](http://chendongmarch.github.io/2017/05/25/Android%E5%BC%80%E5%8F%91/%E7%BC%96%E8%AF%91ffmpeg/)
+
+[GitHub，本文介绍内容请查看hello_world分支](https://github.com/chendongMarch/FFmpegAndroidSupport)
+
+ps: 开始的时候我只编译出了6个so文件，缺少`libavdevice.so`和`libpostproc.so`，主要是因为`build_andorid.sh`的配置不同，现在可以编译出8个so文件，在文章中的图片出现的都是6个so文件，特此声明。
+
+<!--more-->
 
 
 ## 配置 NDK 环境
