@@ -30,6 +30,17 @@ LOCAL_MODULE := swscale
 LOCAL_SRC_FILES := libswscale-4.so
 include $(PREBUILT_SHARED_LIBRARY)
 
+include $(CLEAR_VARS)
+LOCAL_MODULE := postproc
+LOCAL_SRC_FILES := libpostproc-54.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := avdevice
+LOCAL_SRC_FILES := libavdevice-57.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+
 #Program
 include $(CLEAR_VARS)
 APP_PLATFORM := android-21
@@ -37,5 +48,5 @@ LOCAL_MODULE :=ffmpeg_support
 LOCAL_SRC_FILES := ffmpeg_android_support.c
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
 LOCAL_LDLIBS := -llog -lz
-LOCAL_SHARED_LIBRARIES := avcodec avfilter avformat avutil swresample swscale
+LOCAL_SHARED_LIBRARIES := avcodec avfilter avformat avutil swresample swscale avdevice postproc
 include $(BUILD_SHARED_LIBRARY)

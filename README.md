@@ -1,42 +1,28 @@
----
-layout: post
-title: 编译FFmpeg
-date: 2017-05-25
-category: Android
-tags: Android
-keywords:
----
 
-编译` FFmpeg3.3.1 `的so文件，并在` Android `工程中使用。
+
+>编译` FFmpeg3.3.1 `的so文件，并在` Android `工程中使用。
 FFmpeg版本：3.3.1
 IDE：AndroidStudio
 OS：Mac OSX
-
+[本文博客链接](http://chendongmarch.github.io/2017/05/25/Android%E5%BC%80%E5%8F%91/%E7%BC%96%E8%AF%91ffmpeg/)
+ps: 开始的时候我只编译出了6个so文件，缺少`libavdevice.so`和`libpostproc.so`，主要是因为`build_andorid.sh`的配置不同，现在可以编译出8个so文件，在文章中的图片出现的都是6个so文件，特此声明。
 <!--more-->
 
-[本文博客链接](http://chendongmarch.github.io/2017/05/25/Android%E5%BC%80%E5%8F%91/%E7%BC%96%E8%AF%91ffmpeg/)
+
 
 ## 配置 NDK 环境
-打开`~/.bash_profile`文件，添加`ndk`的环境变量，最后别忘了`source .bash_profile`更新配置
+打开`~/.bash_profile`文件，添加`ndk`的环境变量，最后别忘了`source .bash_profile`更新配置，完成之后运行 `ndk-build -v`查看版本，没有提示找不到命令就可以了。
 
 ```bash
-#android
-export ANDROID_HOME=/Users/march/AndroidRes/sdk
-
-# sdk
-export PATH=$ANDROID_HOME/platform-tools:$PATH
-export PATH=$ANDROID_HOME/tools:$PATH
-
 # ndk
-export NDK_HOME=$ANDROID_HOME/ndk-bundle
-export PATH=$NDK_ROOT:$PATH
+export PATH=${PATH}:/Users/march/AndroidRes/sdk/ndk-bundle
 ```
 
 
 
 ## 修改 configure
 
-修改`ffmpeg-3.3.1/configure`文件，这个主要是生成的lib包的包名规范成以libxxx.so的形式。 否则生成的so文件在android下是无法加载的，替换过程一定要谨慎，需要全部替换掉。这里我提供一个[替换好的configure文件](https://github.com/chendongMarch/FFmpegAndroidSupport/blob/master/backups/configure)供参考:thumbsup:
+修改`ffmpeg-3.3.1/configure`文件，这个主要是生成的lib包的包名规范成以libxxx.so的形式。 否则生成的so文件在android下是无法加载的，替换过程一定要谨慎，需要全部替换掉。这里我提供一个[替换好的configure文件](https://github.com/chendongMarch/FFmpegAndroidSupport/blob/master/backups/prebuild/configure)供参考:thumbsup:
 
 ```bash
 # 找到下面几行替换一下
@@ -55,7 +41,11 @@ SLIB_INSTALL_LINKS='$(SLIBNAME)'
 
 ## 编写 build_android.sh 脚本
 
-编写`ffmpeg-3.3.1/build_android.sh`脚本注意,NDK后面的路径换成自己的路径，可以参考[编写好的文件:smile:](https://github.com/chendongMarch/FFmpegAndroidSupport/blob/master/backups/build_android.sh)
+编写`ffmpeg-3.3.1/build_android.sh`脚本注意,NDK后面的路径换成自己的路径，可以参考[编写好的文件:smile:](https://github.com/chendongMarch/FFmpegAndroidSupport/blob/master/backups/prebuild/build_android.sh)
+
+关注下面的配置，不要直接拷贝
+`--disable-avdevice`加上之后将不会生成`avdevice.so`文件
+`--enable-gpl`加上之后将会生成`postproc.so`文件
 
 ```bash
 #!/bin/sh
@@ -64,30 +54,35 @@ SYSROOT=$NDK/platforms/android-23/arch-arm
 TOOLCHAIN=$NDK/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64
 function build_one
 {
+
 ./configure \
+--target-os=linux \
 --prefix=$PREFIX \
+--arch=arm \
+--disable-doc \
 --enable-shared \
 --disable-static \
---disable-doc \
+--disable-yasm \
+--disable-symver \
+--enable-gpl \
 --disable-ffmpeg \
 --disable-ffplay \
 --disable-ffprobe \
 --disable-ffserver \
---disable-avdevice \
 --disable-doc \
 --disable-symver \
 --cross-prefix=$TOOLCHAIN/bin/arm-linux-androideabi- \
---target-os=linux \
---arch=arm \
 --enable-cross-compile \
 --sysroot=$SYSROOT \
 --extra-cflags="-Os -fpic $ADDI_CFLAGS" \
 --extra-ldflags="$ADDI_LDFLAGS" \
+
 $ADDITIONAL_CONFIGURE_FLAG
 make clean
 make
 make install
 }
+make clean
 CPU=arm
 PREFIX=$(pwd)/android/$CPU
 ADDI_CFLAGS="-marm"
@@ -98,7 +93,7 @@ build_one
 ## 编译生成 ffmpeg so 库
 执行`build_android.sh`脚本
 如果没有权限可以使用`chomd +x`增加执行权限
-然后等一段时间，你会发现在FFmpeg中出现了一个名为android的文件夹。
+然后等一段时间，😯不，是很长时间，所以前面的配置要谨慎，不然编译完了之后发现有问题，就会很💔，你会发现在FFmpeg中出现了一个名为android的文件夹。
 目录如下
 
 ![](http://7xtjec.com1.z0.glb.clouddn.com/ffmpeg_finder_dir_scan.jpeg)
@@ -203,8 +198,12 @@ include $(BUILD_SHARED_LIBRARY)
 
 
 ## 编写 Application.mk
+关于Application.mk的相关配置可以查看[官方文档](https://developer.android.com/ndk/guides/application_mk.html?hl=zh-cn)
+下面android-14指的是最小支持的AndroidApi在4.0以上，具体看可以查看官方文档APP_PLATFORM这块的内容。这个跟你在manifest文件里面配置的min-sdk也有些关联，不拼配会有警告，不过现在都会在gradle文件中配置minSdk，不用在意也可以，实在强迫症就在manifest里面再声明一次。
+
 ```bash
 APP_ABI := armeabi armeabi-v7a
+APP_PLATFORM := android-14
 ```
 
 

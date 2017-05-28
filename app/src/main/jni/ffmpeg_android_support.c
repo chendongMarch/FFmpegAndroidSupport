@@ -34,7 +34,7 @@ JNIEXPORT jstring Java_com_march_fas_FFmpegSupport_ffmpegHello(JNIEnv *env,jobje
         }
         sprintf(info,"%s[%10s]\n",info,c_temp->name);
         c_temp=c_temp->next;
-        LOGE("shenpengliang1");
+        LOGE("chendong hello world");
     }
     return (*env)->NewStringUTF(env,info);
 }
