@@ -39,19 +39,7 @@ public class MainActivity extends AppCompatActivity {
                         String inVideoPath = new File(Environment.getExternalStorageDirectory(), "in.mp4").getAbsolutePath();
                         String markPath = new File(Environment.getExternalStorageDirectory(), "mark.png").getAbsolutePath();
                         String outVideoPath = new File(Environment.getExternalStorageDirectory(), "out.mp4").getAbsolutePath();
-                        String[] commands = new String[10];
-                        commands[0] = "ffmpeg";
-                        commands[1] = "-i";
-                        commands[2] = inVideoPath;
-                        commands[3] = "-i";
-                        commands[4] = markPath;
-                        commands[5] = "-filter_complex";
-                        commands[6] = "overlay=100:100";
-                        commands[7] = "-codec:a";
-                        commands[8] = "copy";
-                        commands[9] = outVideoPath;
-
-                        FFmpegSupport.ffmpegRunCommand(getWatermarkCmd(inVideoPath, markPath, outVideoPath));
+                        FFmpegSupport.ffmpegRunCommand(getWatermarkCmd1(inVideoPath, markPath, outVideoPath));
                         return null;
                     }
                 }).continueWith(new Continuation<Object, Object>() {
@@ -70,14 +58,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private String[] getWatermarkCmd(String in, String mark, String out) {
+    private String[] getWatermarkCmd1(String inVideoPath, String markPath, String outVideoPath) {
         String[] cmds = new String[]{
                 "ffmpeg",
                 "-i",
-                in,
+                inVideoPath,
+                "-b:v", "3000k", "-g", "1500",
                 "-vf",
-                "movie=" + mark + " [logo]; [in][logo] overlay=10:10 [out]",
-                out};
+                "movie=" + markPath + " [logo]; [in][logo] overlay=10:10 [out]",
+                outVideoPath};
         return cmds;
     }
+
+    private String[] getWatermarkCmd2(String inVideoPath, String markPath, String outVideoPath) {
+        String[] cmds = new String[]{
+                "ffmpeg",
+                "-i",
+                inVideoPath,
+                "-i",
+                markPath,
+                "-filter_complex",
+                "overlay=100:100",
+                "-codec:a",
+                "copy",
+                outVideoPath};
+        return cmds;
+    }
+
 }
