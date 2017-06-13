@@ -64,7 +64,8 @@ LOCAL_SHARED_LIBRARIES:= avcodec-prebuilt-armeabi \
                          postproc-prebuilt-armeabi
 
 LOCAL_C_INCLUDES += -L$(SYSROOT)/usr/include
-LOCAL_C_INCLUDES += /Users/march/Downloads/ffmpeg-3.3.1
+
+LOCAL_C_INCLUDES += /Users/march/AndroidPro/FFmpegAndroidSupport/ffmpeg-3.3.1
 
 LOCAL_CFLAGS := -DUSE_ARM_CONFIG
 

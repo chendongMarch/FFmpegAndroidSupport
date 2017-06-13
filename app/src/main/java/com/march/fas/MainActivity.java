@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Task.callInBackground(new Callable<Object>() {
                     @Override
                     public Object call() throws Exception {
