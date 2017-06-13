@@ -10,10 +10,10 @@ extern "C" {
 /*
  * Class:     com_march_fas_FFmpegSupport
  * Method:    ffmpegRun
- * Signature: (I[Ljava/lang/String;)Ljava/lang/String;
+ * Signature: (I[Ljava/lang/String;)I
  */
 JNIEXPORT jint JNICALL Java_com_march_fas_FFmpegSupport_ffmpegRun
-(JNIEnv *, jobject, jint, jobjectArray);
+  (JNIEnv *, jobject, jint, jobjectArray);
 
 #ifdef __cplusplus
 }

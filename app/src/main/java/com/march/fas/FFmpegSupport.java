@@ -32,19 +32,15 @@ public class FFmpegSupport {
             return 1;
         }
         String[] args = command.split(" ");
-        for (int i = 0; i < args.length; i++) {
-            Log.d("ffmpeg-jni", args[i]);
-        }
-        return ffmpegRun(args.length, args);
+        return ffmpegRunCommand(args);
     }
 
-    public  static int ffmpegRunCommand(String[] commands) {
-        for (int i = 0; i < commands.length; i++) {
-            Log.d("ffmpeg-jni", commands[i]);
+    static int ffmpegRunCommand(String[] commands) {
+        for (String command : commands) {
+            Log.d("ffmpeg-jni", command);
         }
         return ffmpegRun(commands.length, commands);
     }
 
-    // public static native String ffmpegHello();
     public static native int ffmpegRun(int argc, String[] args);
 }
